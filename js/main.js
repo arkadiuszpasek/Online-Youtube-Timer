@@ -1,8 +1,8 @@
 let player;
 let interval;
 const timer = document.getElementById('timer-txt');
-const audio = new Audio('res/front-desk-bells-daniel_simon.mp3');
-//audio.volume = 0.3;
+const audio = new Audio('../res/w3QuestSound.mp3');
+// audio.volume = 0.5;
 let minutes, seconds;
 
 document.querySelector("#urlInp").value = getCookie("yturl");
@@ -36,6 +36,7 @@ function decreaseTimer(){
         clearInterval(interval);
         timer.innerText = "";
     
+        console.log('should play audio')
         audio.play();
         return;
     }
