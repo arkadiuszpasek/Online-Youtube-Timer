@@ -1,7 +1,7 @@
 let player;
 let interval;
 const timer = document.getElementById('timer-txt');
-const audio = new Audio('res/w3QuestSound.mp3');
+const audio = new Audio('https://raw.githubusercontent.com/arkadiuszpasek/Online-Youtube-Timer/master/res/w3QuestSound.mp3');
 // audio.volume = 0.5;
 let minutes, seconds;
 
