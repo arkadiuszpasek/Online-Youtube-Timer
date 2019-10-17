@@ -5,7 +5,7 @@ const audio = new Audio('https://raw.githubusercontent.com/arkadiuszpasek/Online
 // audio.volume = 0.5;
 let minutes, seconds;
 
-document.querySelector("#urlInp").value = getCookie("yturl");
+document.querySelector("#urlInp").value = localStorage.getItem("yturl");
 console.log(player);
 function onYouTubeIframeAPIReady(){
 
@@ -21,9 +21,8 @@ document.getElementById('startBtn').addEventListener('click', () => {
     if(player == undefined)
         startPlayer();
 
-    else if(getCookie("yturl") !=  document.querySelector("#urlInp").value)
+    else if(localStorage.getItem("yturl") !=  document.querySelector("#urlInp").value)
         loadVideo();
-
 });
  
 function startTimer(){
@@ -57,8 +56,8 @@ function decreaseTimer(){
 function loadVideo(){
     const url = document.getElementById('urlInp').value;
 
-    if(url != "" && getCookie("yturl") != url)
-        document.cookie = `yturl=${url}`
+    if(url != "" && localStorage.getItem("yturl") != url)
+    localStorage.setItem("yturl",url);
     
     let videoId_ = getPlaylistId(url);
     if(videoId_)
@@ -93,9 +92,8 @@ function startPlayer(){
 
     const url = document.getElementById('urlInp').value;
 
-    if(url != "" && getCookie("yturl") != url)
-        document.cookie = `yturl=${url}`
-    
+    localStorage.setItem("yturl",url);
+
     let videoId_ = getPlaylistId(url);
 
     if(videoId_){
@@ -142,23 +140,6 @@ function onPlayerReady(event) {
 
     player.playVideo();
     player.setLoop(true);
-}
-
-function getCookie(c_name) {
-    var c_value = " " + document.cookie;
-    var c_start = c_value.indexOf(" " + c_name + "=");
-    if (c_start == -1) {
-        c_value = null;
-    }
-    else {
-        c_start = c_value.indexOf("=", c_start) + 1;
-        var c_end = c_value.indexOf(";", c_start);
-        if (c_end == -1) {
-            c_end = c_value.length;
-        }
-        c_value = unescape(c_value.substring(c_start,c_end));
-    }
-    return c_value;
 }
 
 function getPlaylistId(ytUrl){
