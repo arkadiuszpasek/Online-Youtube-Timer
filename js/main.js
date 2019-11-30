@@ -6,7 +6,6 @@ const audio = new Audio('https://raw.githubusercontent.com/arkadiuszpasek/Online
 let minutes, seconds;
 
 document.querySelector("#urlInp").value = localStorage.getItem("yturl");
-console.log(player);
 function onYouTubeIframeAPIReady(){
 
 }
@@ -35,7 +34,6 @@ function decreaseTimer(){
         clearInterval(interval);
         timer.innerText = "";
     
-        console.log('should play audio')
         audio.play();
         return;
     }
@@ -65,9 +63,11 @@ function loadVideo(){
         player.loadPlaylist({
             list: videoId_,
             listType: 'playlist',
-            index: 0,
+            index: -1,
             startSeconds: 0
         })
+
+        //player.setShuffle(true);
     }
     else
     {
@@ -112,7 +112,6 @@ function startPlayer(){
         });
     }
     else{
-        console.log('videoID')
         videoId_ = getVideoId(url);
         videoId_ = videoId_ ? videoId_ : 'GdzrrWA8e7A';
 
