@@ -6,28 +6,20 @@ const audio = new Audio('https://raw.githubusercontent.com/arkadiuszpasek/Online
 let minutes, seconds;
 
 document.querySelector("#urlInp").value = localStorage.getItem("yturl");
-function onYouTubeIframeAPIReady(){
-
-}
 
 document.getElementById('startBtn').addEventListener('click', () => {
     timer.innerText = document.getElementById('timeInp').value;
     minutes = timer.innerText;
     seconds = 0;
 
-    startTimer();
+    clearInterval(interval);
+    interval = setInterval(decreaseTimer, 1000);
 
     if(player == undefined)
         startPlayer();
-
     else if(localStorage.getItem("yturl") !=  document.querySelector("#urlInp").value)
         loadVideo();
 });
- 
-function startTimer(){
-    clearInterval(interval);
-    interval = setInterval(decreaseTimer, 1000);
-}
 
 function decreaseTimer(){
     if(minutes <= 0 && seconds <= 1){
@@ -58,19 +50,15 @@ function loadVideo(){
     localStorage.setItem("yturl",url);
     
     let videoId_ = getPlaylistId(url);
-    if(videoId_)
-    {
+    if(videoId_){
         player.loadPlaylist({
             list: videoId_,
             listType: 'playlist',
             index: -1,
             startSeconds: 0
         })
-
-        //player.setShuffle(true);
     }
-    else
-    {
+    else{
         videoId_ = getVideoId(url);
         videoId_ = videoId_ ? videoId_ : 'GdzrrWA8e7A';
 
@@ -142,13 +130,11 @@ function onPlayerReady(event) {
 }
 
 function getPlaylistId(ytUrl){
-    const playlistExp = /^.*(?:youtu.*\/*list=)(.*?)(?:(?=&|$))/;
-    const match = ytUrl.match(playlistExp);
+    const match = ytUrl.match(/^.*(?:youtu.*\/*list=)(.*?)(?:(?=&|$))/);
     return match ? match[1] : "";
 }
 
 function getVideoId(ytUrl){
-    const idExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    match = ytUrl.match(idExp);
+    match = ytUrl.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
     return (match && match[2].length == 11)? match[2] : "";
 }
