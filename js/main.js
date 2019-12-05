@@ -2,6 +2,7 @@ let player;
 let interval;
 const timer = document.getElementById('timer-txt');
 const audio = new Audio('https://raw.githubusercontent.com/arkadiuszpasek/Online-Youtube-Timer/master/res/w3QuestSound.mp3');
+const defaultTitle = 'Youtube Pomodoro Timer';
 // audio.volume = 0.5;
 let minutes, seconds;
 
@@ -25,6 +26,7 @@ function decreaseTimer(){
     if(minutes <= 0 && seconds <= 1){
         clearInterval(interval);
         timer.innerText = "";
+        document.title = defaultTitle;
     
         audio.play();
         return;
@@ -40,7 +42,9 @@ function decreaseTimer(){
     if(seconds > 9)
         timer.innerText = `${minutes}:${seconds}`;
     else
-        timer.innerText = `${minutes}:0${seconds}`
+        timer.innerText = `${minutes}:0${seconds}`;
+
+    document.title = `${timer.innerText} - ${defaultTitle}`;
 }
 
 function loadVideo(){
